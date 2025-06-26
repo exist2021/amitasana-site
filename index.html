@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amitasana Dasa – Official Site</title>
+
+  <!-- Swiper CSS for Slider -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+  <style>
+    :root {
+      --primary-color: #1a3d7c;
+      --accent-color: #2055a0;
+      --bg-light: #f3f7fa;
+      --text-color: #333;
+      --heading-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --body-font: 'Arial', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--body-font); color: var(--text-color); background: var(--bg-light); }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+
+    header { background: #fff; padding: 1rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 10; }
+    .logo { font-family: var(--heading-font); font-size: 1.5rem; color: var(--primary-color); text-decoration: none; }
+    nav { float: right; }
+    nav ul { display: flex; list-style: none; }
+    nav li { margin-left: 1.5rem; }
+    nav a { color: var(--text-color); text-decoration: none; font-weight: 500; }
+    nav a:hover { color: var(--primary-color); }
+    .clear { clear: both; }
+
+    /* Hero Slider */
+    .hero { position: relative; }
+    .swiper-container.hero-slider { width: 100%; height: 80vh; }
+    .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+    .swiper-button-prev, .swiper-button-next { color: #fff; }
+
+    /* Section Headings */
+    h2 { font-family: var(--heading-font); font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem; }
+    section { background: #fff; margin-bottom: 2rem; border-radius: 8px; overflow: hidden; }
+    .section-content { padding: 2rem 1rem; }
+
+    /* Contributions Grid */
+    .contrib-grid { display: flex; justify-content: space-around; flex-wrap: wrap; padding: 2rem 1rem; }
+    .contrib-item { text-align: center; width: 200px; margin: 1rem; }
+    .contrib-item img { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; }
+    .contrib-item h3 { margin-top: 0.75rem; font-size: 1.1rem; }
+
+    /* Video & Audio */
+    .videos-section .media-wrapper { position: relative; width: 100%; margin-bottom: 2rem; }
+    .videos-section .video-wrapper { padding-bottom: 56.25%; height: 0; }
+    .videos-section iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+    /* Gallery Grid */
+    .gallery-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; }
+    .gallery-large img, .gallery-small-grid img { width: 100%; display: block; object-fit: cover; }
+    .gallery-small-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .view-more { position: relative; display: block; }
+    .view-more::after { content: 'View More'; position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.5); color: #fff; font-size: 1.25rem; }
+
+    footer { background: #fff; padding: 2rem 1rem; }
+    .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: flex-start; }
+    .footer-contact, .footer-branding { max-width: 48%; }
+    .footer-contact a { color: var(--text-color); text-decoration: none; }
+    .footer-contact a:hover { text-decoration: underline; }
+    .footer-branding p { font-family: var(--heading-font); margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <a href="#" class="logo">Amitasana Dasa</a>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contributions">Contributions</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="clear"></div>
+  </header>
+
+  <!-- Hero Slider with real portraits -->
+  <section class="hero">
+    <div class="swiper-container hero-slider">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="https://www.iskconbangalore.org/wp-content/uploads/2025/03/amitasana-dasa.jpg" alt="Amitasana Dasa portrait"></div>
+        <div class="swiper-slide"><img src="https://www.harekrishna-movement.org/assets/images/members/amitasana-dasa.jpg" alt="Amitasana Dasa portrait"></div>
+      </noreferrer
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="section-content container">
+      <h2>About</h2>
+      <p>Born in <strong>1969</strong> in Namrup, Assam, Amitasana Dasa earned a B.Tech in Computer Science from REC, Kurukshetra, and served as a software engineer before dedicating himself to ISKCON in 1992.</p>
+      <p>He currently holds key leadership roles in Mumbai, Jaipur, and Maharashtra, guiding spiritual programs, youth workshops, and philanthropic initiatives.</p>
+    </div>
+  </section>
+
+  <!-- Contributions Section -->
+  <section id="contributions" class="container">
+    <h2>Contributions</h2>
+    <div class="contrib-grid">
+      <div class="contrib-item">
+        <img src="https://www.iskconbangalore.org/wp-content/uploads/2025/03/amitasana-dasa.jpg" alt="Seminars & Workshops">
+        <h3>Seminars & Workshops</h3>
+      </div>
+      <div class="contrib-item">
+        <img src="https://i.ytimg.com/vi/9m8J1hcpex4/maxresdefault.jpg" alt="YouTube Talk">
+        <h3>YouTube Talks</h3>
+      </div>
+      <div class="contrib-item">
+        <img src="https://i.ytimg.com/vi/ufB-4WxO0oM/maxresdefault.jpg" alt="Bhagavatam Lectures">
+        <h3>Bhagavatam Lectures</h3>
+      </div>
+      <div class="contrib-item">
+        <img src="https://www.harekrishna-movement.org/assets/images/members/amitasana-dasa.jpg" alt="Community Service">
+        <h3>Community Service</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Videos Section -->
+  <section class="videos-section container">
+    <h2>Videos</h2>
+    <div class="media-wrapper video-wrapper">
+      <iframe src="https://www.youtube.com/embed/NHh68gTtQI0" allowfullscreen title="Amitasana Dasa Live Lecture"></iframe>
+    </div>
+    <div class="media-wrapper video-wrapper">
+      <iframe src="https://www.youtube.com/embed/9m8J1hcpex4" allowfullscreen title="Amitasana Dasa Talk"></iframe>
+    </div>
+    <div class="media-wrapper video-wrapper">
+      <iframe src="https://www.youtube.com/embed/LyHytEHamtU" allowfullscreen title="Amitasana Dasa Special Lecture"></iframe>
+    </div>
+    <div class="media-wrapper audio-wrapper">
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/iskconbangalore/sets/amitasana-dasa">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="gallery-section container">
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+      <div class="gallery-large">
+        <img src="https://i.ytimg.com/vi/9m8J1hcpex4/maxresdefault.jpg" alt="Event Highlights">
+      </div>
+      <div class="gallery-small-grid">
+        <img src="https://i.ytimg.com/vi/ufB-4WxO0oM/maxresdefault.jpg" alt="Lecture Snapshot">
+        <img src="https://www.iskconbangalore.org/wp-content/uploads/2025/03/amitasana-dasa.jpg" alt="Portrait">
+        <a href="#" class="view-more"><img src="https://www.harekrishna-movement.org/assets/images/members/amitasana-dasa.jpg" alt="More Images"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="footer-grid container">
+      <div class="footer-contact">
+        <p><a href="mailto:contact@harekrishna.org">contact@harekrishna.org</a></p>
+        <p>Hare Krishna Hill, West of Chord Road,<br>Bengaluru, Karnataka, India - 560010</p>
+      </div>
+      <div class="footer-branding">
+        <p>Amitasana Dasa</p>
+        <p><em>in the service of Srila Prabhupada</em></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    new Swiper('.hero-slider', {
+      loop: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+  </script>
+</body>
+</html>
