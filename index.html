@@ -32,10 +32,21 @@
 
     /* Hero Slider */
     .hero { margin-bottom: 2rem; }
-    .hero-slider { width: 100%; height: 60vh; }
-    .hero-slider .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-slider { width: 100%; height: 80vh; }
+    .hero-slider .swiper-slide img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
     /* Hide arrows on mobile */
     @media (max-width: 767px) {
+      .hero-slider .swiper-button-prev, .hero-slider .swiper-button-next { display: none; }
+      .hero-slider { height: 50vh; }
+    }
+
+    /* Desktop extra: ensure head visible */
+    @media (min-width: 768px) {
+      .hero-slider { height: 80vh; }
+      .hero-slider .swiper-slide img { object-position: center top; }
+    }
+
+    h2 { font-family: var(--heading-font); color: var(--primary-color); font-size: 2rem; margin-bottom: 1rem; } (max-width: 767px) {
       .hero-slider .swiper-button-prev, .hero-slider .swiper-button-next { display: none; }
       .hero-slider { height: 50vh; }
     }
@@ -68,6 +79,19 @@
     .footer-contact a { text-decoration: none; color: var(--text-color); }
     .footer-contact a:hover { text-decoration: underline; }
     .footer-branding p { font-family: var(--heading-font); }
+      /* Override Hero Slider for better fit */
+    .hero-slider { width: 100% !important; height: auto !important; }
+    .hero-slider .swiper-slide { display: flex; justify-content: center; align-items: center; }
+    .hero-slider .swiper-slide img {
+      width: auto !important;
+      max-width: 100% !important;
+      max-height: 80vh !important;
+      object-fit: contain !important;
+      object-position: center !important;
+    }
+    @media (max-width: 767px) {
+      .hero-slider .swiper-slide img { max-height: 50vh !important; }
+    }
   </style>
 </head>
 <body>
