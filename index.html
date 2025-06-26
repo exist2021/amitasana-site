@@ -9,6 +9,10 @@
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
   <style>
+    /* Video Gallery Grid Styles */
+    .video-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .video-item iframe { width: 100%; height: 200px; border: none; }
+
     :root {
       --primary-color: #1a3d7c;
       --accent-color: #2055a0;
@@ -155,22 +159,20 @@
   <!-- Videos Section -->
   <section class="videos-section container">
     <h2>Videos</h2>
-    <div class="swiper-container video-slider">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <iframe src="https://www.youtube.com/embed/NHh68gTtQI0" title="Live Lecture" allowfullscreen></iframe>
-        </div>
-        <div class="swiper-slide">
-          <iframe src="https://www.youtube.com/embed/9m8J1hcpex4" title="Talk" allowfullscreen></iframe>
-        </div>
-        <div class="swiper-slide">
-          <iframe src="https://www.youtube.com/embed/LyHytEHamtU" title="Special Lecture" allowfullscreen></iframe>
-        </div>
+    <!-- Video Gallery Grid -->
+    <div class="video-gallery">
+      <div class="video-item">
+        <iframe src="https://www.youtube.com/embed/NHh68gTtQI0" title="Live Lecture" allowfullscreen></iframe>
       </div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-pagination"></div>
+      <div class="video-item">
+        <iframe src="https://www.youtube.com/embed/9m8J1hcpex4" title="Talk" allowfullscreen></iframe>
+      </div>
+      <div class="video-item">
+        <iframe src="https://www.youtube.com/embed/LyHytEHamtU" title="Special Lecture" allowfullscreen></iframe>
+      </div>
     </div>
+
+    <!-- Audio Player -->
     <div class="audio-wrapper">
       <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
         src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/iskconbangalore/sets/amitasana-dasa">
