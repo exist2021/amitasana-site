@@ -4,10 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Amitasana Dasa – Official Site</title>
-
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
   <style>
     /* Reset & Variables */
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -20,53 +18,51 @@
       --body-font: 'Arial', sans-serif;
     }
     body { font-family: var(--body-font); color: var(--text-color); background: var(--bg-light); }
-    .container { max-width: 1200px; margin: auto; padding: 1rem; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 1rem; }
 
-    /* Header */
-    header { background: #fff; padding: 1rem 0; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-    .logo { font-family: var(--heading-font); color: var(--primary-color); font-size: 1.5rem; text-decoration: none; }
-    nav ul { display: flex; gap: 1.5rem; list-style: none; }
-    nav a { text-decoration: none; color: var(--text-color); font-weight: 500; }
-    nav a:hover { color: var(--primary-color); }
-    .nav-wrap { display: flex; align-items: center; justify-content: space-between; }
+    /* Header & Nav */
+    header { position: sticky; top: 0; background: #fff; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .nav-wrap { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; }
+    .logo { font-family: var(--heading-font); font-size: 1.5rem; color: var(--primary-color); text-decoration: none; }
+    nav.desktop-nav ul { display: flex; gap: 1.5rem; list-style: none; }
+    nav.desktop-nav a { color: var(--text-color); text-decoration: none; font-weight: 500; }
+    nav.desktop-nav a:hover { color: var(--primary-color); }
+    /* Hamburger */
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
+    .hamburger span { display: block; width: 25px; height: 3px; background: var(--text-color); }
+
+    /* Mobile Menu */
+    nav.mobile-nav { position: absolute; top: 100%; left: 0; width: 100%; background: #fff; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    nav.mobile-nav.open { max-height: 300px; }
+    nav.mobile-nav ul { display: flex; flex-direction: column; padding: 1rem; gap: 1rem; }
+    nav.mobile-nav a { color: var(--text-color); text-decoration: none; font-weight: 500; }
 
     /* Hero Slider */
     .hero { margin-bottom: 2rem; }
     .hero-slider { width: 100%; height: 80vh; }
     .hero-slider .swiper-slide img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
-    /* Hide arrows on mobile */
     @media (max-width: 767px) {
-      .hero-slider .swiper-button-prev, .hero-slider .swiper-button-next { display: none; }
       .hero-slider { height: 50vh; }
-    }
-
-    /* Desktop extra: ensure head visible */
-    @media (min-width: 768px) {
-      .hero-slider { height: 80vh; }
-      .hero-slider .swiper-slide img { object-position: center top; }
-    }
-
-    h2 { font-family: var(--heading-font); color: var(--primary-color); font-size: 2rem; margin-bottom: 1rem; } (max-width: 767px) {
       .hero-slider .swiper-button-prev, .hero-slider .swiper-button-next { display: none; }
-      .hero-slider { height: 50vh; }
     }
 
+    /* Section Headings */
     h2 { font-family: var(--heading-font); color: var(--primary-color); font-size: 2rem; margin-bottom: 1rem; }
-    section { background: #fff; margin-bottom: 2rem; border-radius: 8px; overflow: hidden; }
-    .section-content { padding: 2rem 1rem; }
+    section { background: #fff; border-radius: 8px; overflow: hidden; margin-bottom: 2rem; }
+    .section-content { padding: 1.5rem; }
 
     /* Contributions */
     .contrib-grid { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
-    .contrib-item { width: 200px; text-align: center; }
-    .contrib-item img { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; }
+    .contrib-item { width: 180px; text-align: center; }
+    .contrib-item img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; }
     .contrib-item h3 { margin-top: 0.5rem; font-size: 1rem; }
 
-    /* Video Gallery Grid */
-    .video-gallery { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 1rem; }
+    /* Video Gallery */
+    .video-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1rem; }
     .video-gallery iframe { width: 100%; height: 200px; border: none; }
 
     /* Gallery Slider */
-    .gallery-slider { width: 100%; height: 300px; margin-bottom: 2rem; }
+    .gallery-slider { width: 100%; height: 300px; }
     .gallery-slider .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
 
     /* Audio Player */
@@ -74,31 +70,30 @@
 
     /* Footer */
     footer { background: #fff; padding: 2rem 1rem; }
-    .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; }
+    .footer-grid { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; }
     .footer-contact, .footer-branding { flex: 1; min-width: 250px; }
-    .footer-contact a { text-decoration: none; color: var(--text-color); }
+    .footer-contact a { color: var(--text-color); text-decoration: none; }
     .footer-contact a:hover { text-decoration: underline; }
-    .footer-branding p { font-family: var(--heading-font); }
-      /* Override Hero Slider for better fit */
-    .hero-slider { width: 100% !important; height: auto !important; }
-    .hero-slider .swiper-slide { display: flex; justify-content: center; align-items: center; }
-    .hero-slider .swiper-slide img {
-      width: auto !important;
-      max-width: 100% !important;
-      max-height: 80vh !important;
-      object-fit: contain !important;
-      object-position: center !important;
-    }
-    @media (max-width: 767px) {
-      .hero-slider .swiper-slide img { max-height: 50vh !important; }
-    }
   </style>
 </head>
 <body>
   <header>
     <div class="container nav-wrap">
       <a href="#" class="logo">Amitasana Dasa</a>
-      <nav>
+      <nav class="desktop-nav">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contributions">Contributions</a></li>
+          <li><a href="#videos">Videos</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+      <nav class="mobile-nav" id="mobile-nav">
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#about">About</a></li>
@@ -137,22 +132,10 @@
     <div class="section-content container">
       <h2>Contributions</h2>
       <div class="contrib-grid">
-        <div class="contrib-item">
-          <img src="https://www.iskconbangalore.org/wp-content/uploads/2025/03/amitasana-dasa.jpg" alt="Seminars">
-          <h3>Seminars & Workshops</h3>
-        </div>
-        <div class="contrib-item">
-          <img src="https://i.ytimg.com/vi/9m8J1hcpex4/maxresdefault.jpg" alt="YouTube Talk">
-          <h3>YouTube Talks</h3>
-        </div>
-        <div class="contrib-item">
-          <img src="https://i.ytimg.com/vi/ufB-4WxO0oM/maxresdefault.jpg" alt="Bhagavatam Lectures">
-          <h3>Bhagavatam Lectures</h3>
-        </div>
-        <div class="contrib-item">
-          <img src="https://www.harekrishna-movement.org/assets/images/members/amitasana-dasa.jpg" alt="Service">
-          <h3>Community Service</h3>
-        </
+        <div class="contrib-item"><img src="https://www.iskconbangalore.org/wp-content/uploads/2025/03/amitasana-dasa.jpg" alt="Seminars"><h3>Seminars & Workshops</h3></div>
+        <div class="contrib-item"><img src="https://i.ytimg.com/vi/9m8J1hcpex4/maxresdefault.jpg" alt="YouTube Talks"><h3>YouTube Talks</h3></div>
+        <div class="contrib-item"><img src="https://i.ytimg.com/vi/ufB-4WxO0oM/maxresdefault.jpg" alt="Bhagavatam Lectures"><h3>Bhagavatam Lectures</h3></div>
+        <div class="contrib-item"><img src="https://www.harekrishna-movement.org/assets/images/members/amitasana-dasa.jpg" alt="Community Service"><h3>Community Service</h3></div>
       </div>
     </div>
   </section>
@@ -168,8 +151,7 @@
       </div>
       <div class="audio-wrapper">
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
-          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/iskconbangalore/sets/amitasana-dasa">
-        </iframe>
+          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/iskconbangalore/sets/amitasana-dasa"></iframe>
       </div>
     </div>
   </section>
@@ -203,24 +185,25 @@
     </div>
   </footer>
 
-  <!-- Swiper JS -->
+  <!-- Swiper JS & Menu Script -->
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
-    // Hero slider autoplay & nav
+    // Hero slider
     new Swiper('.hero-slider', {
       loop: true,
       autoplay: { delay: 4000, disableOnInteraction: false },
-      navigation: {
-        nextEl: '.hero-slider .swiper-button-next',
-        prevEl: '.hero-slider .swiper-button-prev',
-      },
+      navigation: { nextEl: '.hero-slider .swiper-button-next', prevEl: '.hero-slider .swiper-button-prev' }
     });
-    // Gallery slider autoplay
+    // Gallery slider
     new Swiper('.gallery-slider', {
       loop: true,
       autoplay: { delay: 3000, disableOnInteraction: false },
       slidesPerView: 1,
-      breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
+      breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+    });
+    // Mobile menu toggle
+    document.getElementById('hamburger').addEventListener('click', function() {
+      document.getElementById('mobile-nav').classList.toggle('open');
     });
   </script>
 </body>
