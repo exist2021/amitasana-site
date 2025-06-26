@@ -27,12 +27,29 @@
     nav.desktop-nav ul { display: flex; gap: 1.5rem; list-style: none; }
     nav.desktop-nav a { color: var(--text-color); text-decoration: none; font-weight: 500; }
     nav.desktop-nav a:hover { color: var(--primary-color); }
+
+    /* Donate Button */
+    .donate-button {
+      background-color: var(--accent-color);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+    .donate-button:hover {
+      background-color: var(--primary-color);
+      color: #fff; /* Ensure text color remains white on hover */
+    }
+
     /* Hamburger */
     .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
     .hamburger span { display: block; width: 25px; height: 3px; background: var(--text-color); }
     @media (max-width: 767px) {
       .hamburger { display: flex; }
       nav.desktop-nav { display: none; }
+      .donate-button { margin-left: auto; } /* Align donate button to the right in mobile view if it becomes part of a flex container */
     }
 
     /* Mobile Menu */
@@ -105,6 +122,25 @@
     .footer-contact, .footer-branding { flex: 1; min-width: 250px; }
     .footer-contact a { color: var(--text-color); text-decoration: none; }
     .footer-contact a:hover { text-decoration: underline; }
+
+    /* Donate Section */
+    .donate-section { background: var(--bg-light); text-align: center; padding: 3rem 1rem; }
+    .donate-section h2 { margin-bottom: 1rem; }
+    .donate-section p { max-width: 600px; margin: 0 auto 1.5rem auto; }
+    .donate-section .donate-button { /* Re-use and enhance if needed */
+      display: inline-block; /* To allow margin auto and padding */
+      background-color: var(--accent-color);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+    }
+    .donate-section .donate-button:hover {
+      background-color: var(--primary-color);
+    }
   </style>
 </head>
 <body>
@@ -119,6 +155,7 @@
           <li><a href="#videos">Videos</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contact</a></li>
+          <li><a href="https://donation.guptvrindavandham.org/c/square-feet-seva/" class="donate-button" target="_blank">Donate</a></li>
         </ul>
       </nav>
       <div class="hamburger" id="hamburger">
@@ -132,6 +169,7 @@
           <li><a href="#videos">Videos</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contact</a></li>
+          <li><a href="https://donation.guptvrindavandham.org/c/square-feet-seva/" class="donate-button" target="_blank">Donate</a></li>
         </ul>
       </nav>
     </div>
@@ -227,6 +265,15 @@
           <div class="swiper-slide"><img src="https://www.harekrishna-movement.org/assets/images/members/amitasana-dasa.jpg" alt="Member"></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Donate Section -->
+  <section id="donate" class="donate-section">
+    <div class="container">
+      <h2>Support Our Mission</h2>
+      <p>Your generous contributions help us continue our spiritual and community services. Every donation, big or small, makes a significant impact. Join us in making a difference.</p>
+      <a href="https://donation.guptvrindavandham.org/c/square-feet-seva/" class="donate-button" target="_blank">Donate Now</a>
     </div>
   </section>
 
