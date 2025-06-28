@@ -101,13 +101,58 @@
 
     /* Contributions */
     .contrib-grid { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
-    .contrib-item { width: 180px; text-align: center; }
-    .contrib-item img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; }
+    .contrib-item { width: 180px; text-align: center; display: flex; flex-direction: column; align-items: center;}
+    .contrib-item img {
+      width: 100%; /* Allow image to take full width of container */
+      max-width: 150px; /* Max width for the logo */
+      height: 120px; /* Fixed height for logos */
+      object-fit: contain; /* Show whole logo, scale down if needed */
+      margin-bottom: 0.5rem; /* Space between logo and text */
+    }
+    .contrib-item-gvd-logo-bg img { /* Target the image within the specific container */
+      background-color: #0072ff; /* Specific blue for GVD logo background */
+      padding: 5px; /* Add some padding so logo doesn't touch edges of background */
+      box-sizing: border-box; /* Ensure padding is included in width/height calculations */
+    }
     .contrib-item h3 { margin-top: 0.5rem; font-size: 1rem; }
 
-    /* Video Gallery */
-    .video-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1rem; }
-    .video-gallery iframe { width: 100%; height: 200px; border: none; }
+    /* Video Gallery / Carousel */
+    .video-carousel {
+      width: 100%;
+      /* height: 300px; Remove fixed height from container, let slides determine it */
+      margin-bottom: 1rem; /* Space below carousel */
+      position: relative; /* Needed for absolute positioning of nav buttons if they are outside slides */
+    }
+    .video-carousel .swiper-slide {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100) - REVERTED */
+      background: #000;
+      overflow: hidden; /* Ensure iframe does not overflow */
+    }
+    .video-carousel .swiper-slide iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    /* Remove media query for fixed height as aspect ratio will handle it */
+    /* @media (min-width: 768px) {
+      .video-carousel {
+        height: 400px;
+      }
+    } */
+    /* Styling for Swiper navigation buttons if they are too faint or misplaced */
+    .video-carousel .swiper-button-next,
+    .video-carousel .swiper-button-prev {
+      color: #fff; /* Make them white for better visibility on black bg */
+    }
+    .video-carousel .swiper-pagination-bullet-active {
+      background: #fff; /* Active pagination bullet white */
+    }
+
 
     /* Gallery Slider */
     .gallery-slider { width: 100%; height: 500px; } /* Increased height for embeds */
@@ -132,6 +177,15 @@
            or specific aspect ratio if needed, but that's complex for mixed content.
            The 500px height on gallery-slider should give enough room. */
     }
+    .instagram-overlay-link {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1; /* Above the iframe */
+      background-color: rgba(0,0,0,0); /* Transparent */
+    }
 
 
     /* Audio Player */
@@ -146,11 +200,21 @@
 
     /* Donate Section */
     .donate-section { background: var(--bg-light); text-align: center; padding: 3rem 1rem; }
-    .donate-section h2 { margin-bottom: 1rem; }
+    .donate-section h2 { margin-bottom: 0.5rem; } /* Reduced margin for main heading */
+    .donate-section .donate-subheading {
+      font-size: 1.1rem; /* Slightly larger than normal p but smaller than h2 */
+      color: var(--text-color); /* Standard text color */
+      margin-bottom: 1.5rem; /* Space before the next paragraph */
+      font-weight: normal; /* Ensure it's not bold like a heading */
+      line-height: 1.4;
+      max-width: 700px; /* Allow slightly wider for subheading */
+      margin-left: auto;
+      margin-right: auto;
+    }
     .donate-section p { max-width: 600px; margin: 0 auto 1.5rem auto; }
-    .donate-section .donate-button { /* Re-use and enhance if needed */
+    .donate-section .donate-button { /* Styling inherited from general .donate-button for red color */
       display: inline-block; /* To allow margin auto and padding */
-      background-color: var(--accent-color);
+      /* background-color: var(--accent-color); */ /* Removed to inherit red */
       color: white;
       padding: 0.75rem 1.5rem;
       border-radius: 5px;
@@ -160,7 +224,7 @@
       transition: background-color 0.3s ease;
     }
     .donate-section .donate-button:hover {
-      background-color: var(--primary-color);
+      /* background-color: var(--primary-color); */ /* Removed to inherit darker red hover */
     }
   </style>
 </head>
@@ -176,7 +240,7 @@
           <li><a href="#videos">Videos</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href="https://donation.guptvrindavandham.org/c/square-feet-seva/" class="donate-button" target="_blank">Square-feet Seva</a></li>
+          <li><a href="https://donation.guptvrindavandham.org/c/square-feet-seva/" class="donate-button" target="_blank">Donate</a></li>
         </ul>
       </nav>
       <div class="hamburger" id="hamburger">
@@ -190,7 +254,7 @@
           <li><a href="#videos">Videos</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href="https://donation.guptvrindavandham.org/c/square-feet-seva/" class="donate-button" target="_blank">Square-feet Seva</a></li>
+          <li><a href="https://donation.guptvrindavandham.org/c/square-feet-seva/" class="donate-button" target="_blank">Donate</a></li>
         </ul>
       </nav>
     </div>
@@ -223,24 +287,6 @@
     <div class="section-content container">
       <h2>About</h2>
       <p>Amitasana Prabhu was born in Assam in 1969 and raised in a devout middle-class family from Rohtak, Haryana. Inspired early by temple service, he pursued engineering at NIT Kurukshetra, where a life-changing lecture sparked his embrace of Krishna Consciousness. Balancing a software career in Bangalore with temple service, he deepened his faith under devotees like Chanchalāpati Prabhu and Madhupandit Prabhu. He applied his technical skills to temple administration and fundraising, witnessing Krishna’s provision in projects and feeding initiatives. Amitasana’s mission is to blend modern expertise with devotional service, inspiring others through gratitude, sincerity, community programs.</p>
-      <div class="roles">
-        <div class="role-card">
-          <h3>President</h3>
-          <p><a href="https://instagram.com/theakshayapatrafoundation" target="_blank">@theakshayapatrafoundation</a> (Maharashtra)</p>
-        </div>
-        <div class="role-card">
-          <h3>President</h3>
-          <p><a href="https://instagram.com/guptvrindavandham" target="_blank">@guptvrindavandham</a></p>
-        </div>
-        <div class="role-card">
-          <h3>President</h3>
-          <p><a href="https://instagram.com/hkmmumbai" target="_blank">@hkmmumbai</a></p>
-        </div>
-        <div class="role-card">
-          <h3>Trustee</h3>
-          <p><a href="https://instagram.com/akshaychaitanya" target="_blank">@akshaychaitanya</a></p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -249,10 +295,10 @@
     <div class="section-content container">
       <h2>Leadership Roles</h2>
       <div class="contrib-grid">
-        <div class="contrib-item"><img src="https://www.iskconbangalore.org/wp-content/uploads/2025/03/amitasana-dasa.jpg" alt="Seminars"><h3>Seminars & Workshops</h3></div>
-        <div class="contrib-item"><img src="https://i.ytimg.com/vi/9m8J1hcpex4/maxresdefault.jpg" alt="YouTube Talks"><h3>YouTube Talks</h3></div>
-        <div class="contrib-item"><img src="https://i.ytimg.com/vi/ufB-4WxO0oM/maxresdefault.jpg" alt="Bhagavatam Lectures"><h3>Bhagavatam Lectures</h3></div>
-        <div class="contrib-item"><img src="https://www.harekrishna-movement.org/assets/images/members/amitasana-dasa.jpg" alt="Community Service"><h3>Community Service</h3></div>
+        <div class="contrib-item"><img src="https://www.akshayapatra.org/includefiles/settings/logo1.png" alt="The Akshaya Patra Foundation Logo"><h3>President</h3></div>
+        <div class="contrib-item contrib-item-gvd-logo-bg"><img src="https://donation.guptvrindavandham.org/_next/image/?url=%2F_next%2Fstatic%2Fmedia%2Fgupt-vrindavan-dham-logo.07d33405.png&w=640&q=75" alt="Gupt Vrindavan Dham Logo"><h3>President</h3></div>
+        <div class="contrib-item"><img src="https://hkmmumbai.org/static/ccff5f769be9841cc9bb5112b8b2c477/77a77/hkm.webp" alt="Hare Krishna Movement Logo"><h3>President</h3></div>
+        <div class="contrib-item"><img src="https://akshayachaitanya.org/public/assets/images/akshaya-chaitanya-logo-03.webp" alt="Akshaya Chaitanya Logo"><h3>Trustee</h3></div>
       </div>
     </div>
   </section>
@@ -261,10 +307,26 @@
   <section id="videos">
     <div class="section-content container">
       <h2>Videos</h2>
-      <div class="video-gallery">
-        <iframe src="https://www.youtube.com/embed/NHh68gTtQI0" allowfullscreen title="Live Lecture"></iframe>
-        <iframe src="https://www.youtube.com/embed/9m8J1hcpex4" allowfullscreen title="Talk"></iframe>
-        <iframe src="https://www.youtube.com/embed/LyHytEHamtU" allowfullscreen title="Special"></iframe>
+      <div class="swiper-container video-carousel">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/NHh68gTtQI0?enablejsapi=1" allowfullscreen title="Live Lecture" data-videoid="NHh68gTtQI0"></iframe></div>
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/9m8J1hcpex4?enablejsapi=1" allowfullscreen title="Talk" data-videoid="9m8J1hcpex4"></iframe></div>
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/LyHytEHamtU?enablejsapi=1" allowfullscreen title="Special" data-videoid="LyHytEHamtU"></iframe></div>
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/lwqfvIxVZdM?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 1" data-videoid="lwqfvIxVZdM"></iframe></div>
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/u32YT3Y8FAQ?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 2" data-videoid="u32YT3Y8FAQ"></iframe></div>
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/qAgYUIXrGTc?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 3" data-videoid="qAgYUIXrGTc"></iframe></div>
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/oef0Qd292OM?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 4" data-videoid="oef0Qd292OM"></iframe></div>
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/37c7ip5pmuw?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 5" data-videoid="37c7ip5pmuw"></iframe></div>
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/E-nMXXw1BF8?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 6" data-videoid="E-nMXXw1BF8"></iframe></div>
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/nIJj9zl5HIE?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 8" data-videoid="nIJj9zl5HIE"></iframe></div>
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/iO4r2Cq9GZc?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 9" data-videoid="iO4r2Cq9GZc"></iframe></div>
+          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/1BR32v3o2gk?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 10" data-videoid="1BR32v3o2gk"></iframe></div>
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- Add Navigation -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
       </div>
       <div class="audio-wrapper">
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
@@ -279,18 +341,54 @@
       <h2>Gallery</h2>
       <div class="swiper-container gallery-slider">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/DLFnQtqSUsA/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/DKhWpWSJ5EW/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/DJd65GgBK-5/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/DHN_GExCTC6/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/DHLDqOhhW8i/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/DGu_0uhyoLD/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/DGnkHO6Tjlp/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/DGnkHO6Tjlp/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/DEmjMFtzgQC/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/C_SJ425zfsP/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/C-9DdPbTaP1/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.instagram.com/p/C96qA_EzfLk/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe></div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DLFnQtqSUsA/" target="_blank" class="instagram-overlay-link" aria-label="View post DLFnQtqSUsA on Instagram"></a>
+            <iframe src="https://www.instagram.com/p/DLFnQtqSUsA/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DKhWpWSJ5EW/" target="_blank" class="instagram-overlay-link" aria-label="View post DKhWpWSJ5EW on Instagram"></a>
+            <iframe src="https://www.instagram.com/p/DKhWpWSJ5EW/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DJd65GgBK-5/" target="_blank" class="instagram-overlay-link" aria-label="View post DJd65GgBK-5 on Instagram"></a>
+            <iframe src="https://www.instagram.com/p/DJd65GgBK-5/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DHN_GExCTC6/" target="_blank" class="instagram-overlay-link" aria-label="View post DHN_GExCTC6 on Instagram"></a>
+            <iframe src="https://www.instagram.com/p/DHN_GExCTC6/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DHLDqOhhW8i/" target="_blank" class="instagram-overlay-link" aria-label="View post DHLDqOhhW8i on Instagram"></a>
+            <iframe src="https://www.instagram.com/p/DHLDqOhhW8i/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DGu_0uhyoLD/" target="_blank" class="instagram-overlay-link" aria-label="View post DGu_0uhyoLD on Instagram"></a>
+            <iframe src="https://www.instagram.com/p/DGu_0uhyoLD/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DGnkHO6Tjlp/" target="_blank" class="instagram-overlay-link" aria-label="View post DGnkHO6Tjlp on Instagram"></a>
+            <iframe src="https://www.instagram.com/p/DGnkHO6Tjlp/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DGnkHO6Tjlp/" target="_blank" class="instagram-overlay-link" aria-label="View post DGnkHO6Tjlp on Instagram"></a> <!-- Duplicate shortcode, as per previous list -->
+            <iframe src="https://www.instagram.com/p/DGnkHO6Tjlp/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DEmjMFtzgQC/" target="_blank" class="instagram-overlay-link" aria-label="View post DEmjMFtzgQC on Instagram"></a>
+            <iframe src="https://www.instagram.com/p/DEmjMFtzgQC/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/C_SJ425zfsP/" target="_blank" class="instagram-overlay-link" aria-label="View post C_SJ425zfsP on Instagram"></a>
+            <iframe src="https://www.instagram.com/p/C_SJ425zfsP/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/C-9DdPbTaP1/" target="_blank" class="instagram-overlay-link" aria-label="View post C-9DdPbTaP1 on Instagram"></a>
+            <iframe src="https://www.instagram.com/p/C-9DdPbTaP1/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/C96qA_EzfLk/" target="_blank" class="instagram-overlay-link" aria-label="View post C96qA_EzfLk on Instagram"></a>
+            <iframe src="https://www.instagram.com/p/C96qA_EzfLk/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
+          </div>
         </div>
       </div>
     </div>
@@ -299,9 +397,10 @@
   <!-- Donate Section -->
   <section id="donate" class="donate-section">
     <div class="container">
-      <h2>We are building Rajasthan’s Largest Spiritual & Cultural Temple Complex!</h2>
-      <p>Join the divine legacy through Square Feet Seva. Donate by the square foot, preserve Sanatana Dharma, and receive the merciful blessings of Lord Krishna—a rare, once-in-a-lifetime opportunity.</p>
-      <a href="https://donation.guptvrindavandham.org/c/square-feet-seva/" class="donate-button" target="_blank">Square-feet Seva</a>
+      <h2>Square-Feet Seva</h2>
+      <p class="donate-subheading">We are building Rajasthan’s Largest Spiritual & Cultural Temple Complex!</p>
+      <p>Join the divine legacy through <strong>Square Feet Seva</strong>. Donate by the square foot, preserve Sanatana Dharma, and receive the merciful blessings of Lord Krishna—a rare, once-in-a-lifetime opportunity.</p>
+      <a href="https://donation.guptvrindavandham.org/c/square-feet-seva/" class="donate-button" target="_blank">Donate</a>
     </div>
   </section>
 
@@ -320,6 +419,7 @@
   </footer>
 
   <!-- Swiper JS & Menu Script -->
+  <script src="https://www.youtube.com/iframe_api"></script> <!-- YouTube API Script -->
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
     // Hero slider
@@ -331,7 +431,7 @@
     // Gallery slider
     new Swiper('.gallery-slider', {
       loop: true,
-      autoplay: { delay: 3000, disableOnInteraction: false },
+      autoplay: { delay: 3000, disableOnInteraction: true }, // Changed to true
       slidesPerView: 1,
       breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
     });
@@ -339,6 +439,109 @@
     document.getElementById('hamburger').addEventListener('click', function() {
       document.getElementById('mobile-nav').classList.toggle('open');
     });
+
+    // Video Carousel
+    let videoPlayers = [];
+    const videoCarousel = new Swiper('.video-carousel', {
+      loop: true,
+      slidesPerView: 1,
+      spaceBetween: 10,
+      autoplay: {
+        delay: 7000, // Increased delay for videos
+        disableOnInteraction: true, // Keep true: user interaction (like playing a video) should stop autoplay
+      },
+      pagination: {
+        el: '.video-carousel .swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.video-carousel .swiper-button-next',
+        prevEl: '.video-carousel .swiper-button-prev',
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+      },
+      on: {
+        init: function () {
+          // Initialize YouTube Players
+          const iframes = document.querySelectorAll('.video-carousel iframe');
+          iframes.forEach((iframe, index) => {
+            // Ensure each iframe has a unique ID for the API
+            if (!iframe.id) {
+              iframe.id = 'youtube-player-' + index;
+            }
+            // Player will be created when API is ready
+          });
+        },
+        slideChange: function () {
+          // Pause any playing video when slide changes
+          videoPlayers.forEach(player => {
+            if (player && typeof player.pauseVideo === 'function' && player.getPlayerState() === YT.PlayerState.PLAYING) {
+              player.pauseVideo();
+            }
+          });
+        },
+      },
+    });
+
+    function onYouTubeIframeAPIReady() {
+      const iframes = document.querySelectorAll('.video-carousel iframe');
+      iframes.forEach((iframe) => {
+        const playerId = iframe.id; // Use existing or assigned ID
+        if (playerId) { // Ensure iframe has an ID
+          const player = new YT.Player(playerId, {
+            events: {
+              'onStateChange': function(event) {
+                if (event.data === YT.PlayerState.PLAYING) {
+                  if (videoCarousel.autoplay.running) {
+                    videoCarousel.autoplay.stop();
+                  }
+                } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                  // Only resume autoplay if no other video is playing and user hasn't manually navigated
+                  let anyOtherVideoPlaying = videoPlayers.some(p => p !== player && p.getPlayerState && p.getPlayerState() === YT.PlayerState.PLAYING);
+                  if (!anyOtherVideoPlaying && !videoCarousel.autoplay.running && videoCarousel.params.autoplay.disableOnInteraction === false) {
+                     // This logic for resuming autoplay is tricky and might need more refinement
+                     // For now, if disableOnInteraction is true, it won't resume automatically after manual pause/play
+                     // videoCarousel.autoplay.start();
+                  }
+                }
+              }
+            }
+          });
+          videoPlayers.push(player);
+
+          // Add click listener to slide for play/pause
+          const slide = iframe.closest('.swiper-slide');
+          if (slide) {
+            slide.addEventListener('click', () => {
+              if (player && typeof player.getPlayerState === 'function') {
+                const playerState = player.getPlayerState();
+                if (playerState === YT.PlayerState.PLAYING) {
+                  player.pauseVideo();
+                } else if (playerState === YT.PlayerState.PAUSED || playerState === YT.PlayerState.CUED || playerState === YT.PlayerState.UNSTARTED) {
+                  player.playVideo();
+                }
+              }
+            });
+          }
+        }
+      });
+    }
+
+    // Initial check if YT API is already loaded (e.g. if script was loaded async and already done)
+    if (typeof YT !== 'undefined' && YT.Player) {
+      onYouTubeIframeAPIReady();
+    }
+    // Note: The onYouTubeIframeAPIReady function is a global callback that the YouTube API script calls automatically.
+    // No need to explicitly call it unless YT is already defined.
+
   </script>
 </body>
 </html>
