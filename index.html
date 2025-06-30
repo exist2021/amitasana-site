@@ -74,12 +74,23 @@
     .hero-slider .swiper-slide iframe {
       width: 100% !important;
       height: 100% !important;
-      object-fit: cover !important;
+      object-fit: cover !important; /* Existing style for content */
     }
-    .hero-slider .swiper-slide { display: flex; align-items: center; justify-content: center; }
-    .hero-slider .swiper-slide img,
-    .hero-slider .swiper-slide iframe {
+    .hero-slider .swiper-slide { /* Ensure this is relative for the overlay */
+      display: flex; align-items: center; justify-content: center; position: relative;
+    }
+    .hero-slider .swiper-slide img, /* This rule might be redundant if the one above is general enough */
+    .hero-slider .swiper-slide iframe { /* This rule might be redundant */
       width: auto; max-width: 100%; max-height: 120vh; object-fit: contain;
+    }
+    .hero-instagram-profile-link-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1; /* Sit on top of the iframe */
+      background-color: rgba(0,0,0,0); /* Transparent */
     }
     @media (max-width: 767px) {
       .hero-slider { height: 50vh; }
@@ -126,9 +137,10 @@
     .video-carousel .swiper-slide {
       position: relative;
       width: 100%;
-      padding-top: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100) - REVERTED */
+      padding-top: 177.78%; /* 9:16 Aspect Ratio (16 / 9 * 100) - Mobile First */
       background: #000;
       overflow: hidden; /* Ensure iframe does not overflow */
+      height: auto; /* Ensure slide height is driven by padding-top for mobile */
     }
     .video-carousel .swiper-slide iframe {
       position: absolute;
@@ -138,12 +150,35 @@
       height: 100%;
       border: none;
     }
-    /* Remove media query for fixed height as aspect ratio will handle it */
-    /* @media (min-width: 768px) {
+    @media (min-width: 768px) { /* Tablet and Desktop adjustments */
       .video-carousel {
-        height: 400px;
+        height: 280px; /* Fixed height for the carousel on desktop */
       }
-    } */
+      .video-carousel .swiper-slide {
+        padding-top: 0; /* Remove padding-top aspect ratio control */
+        height: 100%;    /* Slide fills the carousel's fixed height */
+        /* Ensure flex centering for the iframe if it's not full slide width/height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .video-carousel .swiper-slide iframe {
+        position: relative; /* Change from absolute to allow object-fit to work with max-width/max-height */
+        width: auto;    /* Allow iframe to determine its width based on 16:9 and available height */
+        height: auto;   /* Allow iframe to determine its height based on 16:9 and available width */
+        max-width: 100%;  /* Don't exceed slide width */
+        max-height: 100%; /* Don't exceed slide height */
+        aspect-ratio: 16 / 9; /* Modern CSS for aspect ratio */
+      }
+    }
+    @media (min-width: 1024px) { /* Constrain width on larger desktop screens */
+       /* .video-carousel {
+         max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+       } */
+      }
+    }
     /* Styling for Swiper navigation buttons if they are too faint or misplaced */
     .video-carousel .swiper-button-next,
     .video-carousel .swiper-button-prev {
@@ -266,14 +301,17 @@
       <div class="swiper-wrapper">
         <!-- Instagram Embed Slide -->
         <div class="swiper-slide">
+          <a href="https://www.instagram.com/amitasanadasa" target="_blank" class="hero-instagram-profile-link-overlay" aria-label="View Amitasana Dasa's Instagram profile"></a>
           <iframe src="https://www.instagram.com/p/DGnkHO6Tjlp/embed" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
         </div>
         <!-- New Instagram Embed Slide -->
         <div class="swiper-slide">
+          <a href="https://www.instagram.com/amitasanadasa" target="_blank" class="hero-instagram-profile-link-overlay" aria-label="View Amitasana Dasa's Instagram profile"></a>
           <iframe src="https://www.instagram.com/p/DEmjMFtzgQC/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
         </div>
         <!-- Adding new Instagram slide -->
         <div class="swiper-slide">
+          <a href="https://www.instagram.com/amitasanadasa" target="_blank" class="hero-instagram-profile-link-overlay" aria-label="View Amitasana Dasa's Instagram profile"></a>
           <iframe src="https://www.instagram.com/p/DErHOkRzyRQ/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>
         </div>
       </div>
@@ -319,7 +357,6 @@
           <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/37c7ip5pmuw?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 5" data-videoid="37c7ip5pmuw"></iframe></div>
           <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/E-nMXXw1BF8?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 6" data-videoid="E-nMXXw1BF8"></iframe></div>
           <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/nIJj9zl5HIE?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 8" data-videoid="nIJj9zl5HIE"></iframe></div>
-          <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/iO4r2Cq9GZc?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 9" data-videoid="iO4r2Cq9GZc"></iframe></div>
           <div class="swiper-slide"><iframe src="https://www.youtube.com/embed/1BR32v3o2gk?enablejsapi=1" allowfullscreen title="Amitasana Dasa Video 10" data-videoid="1BR32v3o2gk"></iframe></div>
         </div>
         <!-- Add Pagination -->
@@ -430,7 +467,11 @@
     // Gallery slider
     new Swiper('.gallery-slider', {
       loop: true,
-      autoplay: { delay: 3000, disableOnInteraction: true }, // Changed to true
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: true, // Keeps existing behavior: click on overlay link stops autoplay
+        pauseOnMouseEnter: true     // Adds: hover over gallery pauses autoplay
+      },
       slidesPerView: 1,
       breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
     });
