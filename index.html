@@ -120,6 +120,15 @@
       object-fit: contain; /* Show whole logo, scale down if needed */
       margin-bottom: 0.5rem; /* Space between logo and text */
     }
+    .contrib-item .contrib-link {
+      text-decoration: none;
+      color: inherit; /* Inherit color from .contrib-item or its parent */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%; /* Make link fill the item for better click area */
+      justify-content: center; /* Center content vertically if item has fixed height and content is smaller */
+    }
     .contrib-item-gvd-logo-bg img { /* Target the image within the specific container */
       background-color: #0072ff; /* Specific blue for GVD logo background */
       padding: 5px; /* Add some padding so logo doesn't touch edges of background */
@@ -137,10 +146,10 @@
     .video-carousel .swiper-slide {
       position: relative;
       width: 100%;
-      padding-top: 177.78%; /* 9:16 Aspect Ratio (16 / 9 * 100) - Mobile First */
+      padding-top: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100) - Now default for mobile too */
       background: #000;
       overflow: hidden; /* Ensure iframe does not overflow */
-      height: auto; /* Ensure slide height is driven by padding-top for mobile */
+      /* height: auto; Ensure slide height is driven by padding-top for mobile - not needed if padding-top is the primary driver */
     }
     .video-carousel .swiper-slide iframe {
       position: absolute;
@@ -324,7 +333,7 @@
   <section id="about">
     <div class="section-content container">
       <h2>About</h2>
-      <p>Amitasana Prabhu was born in Assam in 1969 and raised in a devout middle-class family from Rohtak, Haryana. Inspired early by temple service, he pursued engineering at NIT Kurukshetra, where a life-changing lecture sparked his embrace of Krishna Consciousness. Balancing a software career in Bangalore with temple service, he deepened his faith under devotees like Chanchalāpati Prabhu and Madhupandit Prabhu. He applied his technical skills to temple administration and fundraising, witnessing Krishna’s provision in projects and feeding initiatives. Amitasana’s mission is to blend modern expertise with devotional service, inspiring others through gratitude, sincerity, community programs.</p>
+      <p>Amitasana Prabhu was born in Assam in 1969 and raised in a devout middle-class family in Rohtak, Haryana. Inspired early by temple service, he pursued engineering at NIT Kurukshetra, where a transformative lecture ignited his lifelong devotion to Krishna Consciousness. Balancing his professional career in software with dedicated temple service in Bangalore, he skillfully applied his technical expertise to support temple administration, fundraising, and impactful community initiatives. Witnessing divine guidance in various projects and feeding programs strengthened his conviction. Today, Amitasana Prabhu continues blending modern innovation with heartfelt devotional service, inspiring others through his sincerity, gratitude, and commitment to serving the community.</p>
     </div>
   </section>
 
@@ -333,10 +342,30 @@
     <div class="section-content container">
       <h2>Leadership Roles</h2>
       <div class="contrib-grid">
-        <div class="contrib-item"><img src="https://www.akshayapatra.org/includefiles/settings/logo1.png" alt="The Akshaya Patra Foundation Logo"><h3>President</h3></div>
-        <div class="contrib-item contrib-item-gvd-logo-bg"><img src="https://donation.guptvrindavandham.org/_next/image/?url=%2F_next%2Fstatic%2Fmedia%2Fgupt-vrindavan-dham-logo.07d33405.png&w=640&q=75" alt="Gupt Vrindavan Dham Logo"><h3>President</h3></div>
-        <div class="contrib-item"><img src="https://hkmmumbai.org/static/ccff5f769be9841cc9bb5112b8b2c477/77a77/hkm.webp" alt="Hare Krishna Movement Logo"><h3>President</h3></div>
-        <div class="contrib-item"><img src="https://akshayachaitanya.org/public/assets/images/akshaya-chaitanya-logo-03.webp" alt="Akshaya Chaitanya Logo"><h3>Trustee</h3></div>
+        <div class="contrib-item">
+          <a href="https://www.akshayapatra.org/donate-to-midday-meal-programme" target="_blank" aria-label="Donate to The Akshaya Patra Foundation" class="contrib-link">
+            <img src="https://www.akshayapatra.org/includefiles/settings/logo1.png" alt="The Akshaya Patra Foundation Logo">
+            <h3>President</h3>
+          </a>
+        </div>
+        <div class="contrib-item contrib-item-gvd-logo-bg">
+          <a href="https://guptvrindavandham.org/" target="_blank" aria-label="Visit Gupt Vrindavan Dham website" class="contrib-link">
+            <img src="https://donation.guptvrindavandham.org/_next/image/?url=%2F_next%2Fstatic%2Fmedia%2Fgupt-vrindavan-dham-logo.07d33405.png&w=640&q=75" alt="Gupt Vrindavan Dham Logo">
+            <h3>President</h3>
+          </a>
+        </div>
+        <div class="contrib-item">
+          <a href="https://hkmmumbai.org/" target="_blank" aria-label="Visit HKM Mumbai website" class="contrib-link">
+            <img src="https://hkmmumbai.org/static/ccff5f769be9841cc9bb5112b8b2c477/77a77/hkm.webp" alt="Hare Krishna Movement Logo">
+            <h3>President</h3>
+          </a>
+        </div>
+        <div class="contrib-item">
+          <a href="https://akshayachaitanya.org/" target="_blank" aria-label="Visit Akshaya Chaitanya website" class="contrib-link">
+            <img src="https://akshayachaitanya.org/public/assets/images/akshaya-chaitanya-logo-03.webp" alt="Akshaya Chaitanya Logo">
+            <h3>Trustee</h3>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -434,8 +463,8 @@
   <!-- Donate Section -->
   <section id="square-feet-seva-section" class="donate-section">
     <div class="container">
-      <h2>We are building Rajasthan’s Largest Spiritual & Cultural Temple Complex!</h2>
-      <p>Join the divine legacy through <strong>Square Feet Seva</strong>. Donate by the square foot, preserve Sanatana Dharma, and receive the merciful blessings of Lord Krishna—a rare, once-in-a-lifetime opportunity.</p>
+      <h2>We're building Rajasthan's Largest Spiritual & Cultural Complex!</h2>
+      <p><strong>Join the divine legacy through Square Feet Seva.</strong> Donate by the square foot to help build Rajasthan’s largest spiritual and cultural temple complex—spanning 3.5 lakh sq ft (~350,000 sq ft) across 6 acres, rising 17 stories tall by 2027. Preserve Sanatana Dharma and receive the merciful blessings of Lord Krishna in this rare, once-in-a-lifetime opportunity.</p>
       <a href="https://donation.guptvrindavandham.org/c/square-feet-seva/" class="donate-button" target="_blank">Square-feet Seva</a>
     </div>
   </section>
