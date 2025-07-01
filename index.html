@@ -28,6 +28,59 @@
     nav.desktop-nav a { color: var(--primary-color); text-decoration: none; font-weight: 500; font-size: 1.1rem; } /* Changed link color to primary-color, increased font size */
     nav.desktop-nav a:hover { color: var(--accent-color); } /* Changed hover color */
 
+    /* Desktop Navigation Dropdown */
+    nav.desktop-nav ul li.dropdown-li {
+      position: relative; /* For positioning the submenu */
+    }
+
+    nav.desktop-nav ul li.dropdown-li > a.media-link { /* Target the 'Media' link itself */
+      cursor: default; /* Indicates it's not a direct link, browser might override so test */
+    }
+    nav.desktop-nav ul li.dropdown-li > a.media-link:hover { /* Ensure hover on Media link doesn't change its color if it's not a link */
+        color: var(--primary-color); /* Keep original color */
+    }
+
+
+    nav.desktop-nav ul li .submenu {
+      display: none;
+      position: absolute;
+      top: 100%; /* Position below the parent li */
+      left: 0;
+      background-color: #f8f8f8; /* Match header background */
+      box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      list-style: none;
+      padding: 0.5rem 0;
+      margin: 0; /* Reset margin */
+      min-width: 180px; /* Adjust as needed, ensure it fits content */
+      z-index: 101; /* Above other header content */
+      border-radius: 0 0 4px 4px;
+    }
+
+    nav.desktop-nav ul li.dropdown-li:hover > .submenu { /* Show submenu on hover of the LI */
+      display: block;
+    }
+
+    nav.desktop-nav ul li .submenu li {
+      padding: 0; /* Reset padding */
+      width: 100%; /* Ensure li takes full width of submenu */
+    }
+
+    nav.desktop-nav ul li .submenu li a {
+      display: block;
+      padding: 0.6rem 1.2rem; /* Padding for submenu links */
+      white-space: nowrap;
+      color: var(--primary-color);
+      font-size: 1rem; /* Match main nav or slightly smaller */
+      font-weight: normal; /* Submenu items usually not bold */
+      text-decoration: none; /* Ensure no underline */
+    }
+
+    nav.desktop-nav ul li .submenu li a:hover {
+      background-color: var(--bg-light);
+      color: var(--accent-color); /* Use accent color on hover */
+    }
+
+
     /* Donate Button */
     .donate-button {
       background-color: #D93025; /* New Red Background */
@@ -57,6 +110,24 @@
     nav.mobile-nav.open { display: block !important; max-height: 300px; } /* Added !important */
     nav.mobile-nav ul { display: flex; flex-direction: column; padding: 1rem; gap: 1rem; }
     nav.mobile-nav a { color: var(--text-color); text-decoration: none; font-weight: 500; }
+
+    /* Mobile Navigation Submenu Styling */
+    nav.mobile-nav ul li span.media-label {
+      display: block;
+      padding: 0.5rem 0; /* Match link vertical padding, horizontal padding comes from ul */
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    nav.mobile-nav ul li.mobile-submenu-item a {
+      padding-left: 1.5rem; /* Indent submenu items: ul has 1rem, add more */
+      /* Ensure other properties like color, font-weight are inherited or explicitly set if needed */
+      /* display: block; /* Ensure it takes full width for padding */
+      /* padding-top: 0.5rem; padding-bottom: 0.5rem; /* If gap isn't enough */
+    }
+    /* Adjust gap for mobile nav if items are too close or too far */
+    nav.mobile-nav ul { gap: 0.75rem; } /* Slightly reduced gap for potentially more items */
+
 
     /* Hero Slider */
     .hero { margin-bottom: 2rem; }
@@ -96,7 +167,13 @@
       .hero-slider { height: 50vh; }
       .hero-slider .swiper-slide img,
       .hero-slider .swiper-slide iframe { max-height: 50vh; }
-      .hero-slider .swiper-button-prev, .hero-slider .swiper-button-next { display: none; }
+      /* .hero-slider .swiper-button-prev, .hero-slider .swiper-button-next { display: none; } */ /* Already hidden on mobile, this new rule will hide on desktop too */
+    }
+
+    /* Hide Hero Slider Arrows on all screen sizes */
+    .hero-slider .swiper-button-next,
+    .hero-slider .swiper-button-prev {
+      display: none !important;
     }
 
     /* Section Headings */
@@ -198,8 +275,21 @@
     }
 
     /* Audio Player */
-    #videos .audio-wrapper { margin: 2rem 0; text-align: center; } /* Targeted margin for audio wrapper, centered */
-    #videos .audio-wrapper iframe { width: 100%; max-width: 600px; height: 166px; border: none; } /* Targeted iframe styling */
+    #videos .audio-wrapper {
+      max-width: 600px;
+      margin: 2rem auto; /* For centering the block and vertical margin */
+      padding: 1rem;
+      background: var(--bg-light);
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      box-sizing: border-box; /* Ensures padding is included within the max-width */
+    }
+    #videos .audio-wrapper iframe {
+      width: 100%; /* Takes full width of padded parent */
+      height: 166px;
+      border: none;
+      display: block; /* Ensures it behaves as a block */
+    }
 
     /* Gallery Slider */
     .gallery-slider { width: 100%; height: 500px; } /* Increased height for embeds */
@@ -298,9 +388,14 @@
         <ul>
           <li><a href="#about">About</a></li>
           <li><a href="#contributions">Roles</a></li>
-          <li><a href="#videos">Videos</a></li>
-          <li><a href="#gallery">Gallery</a></li>
- <li><a href="#donate" class="donate-button">Donate</a></li>
+          <li class="dropdown-li"><a href="javascript:void(0);" class="media-link">Media &#9662;</a>
+            <ul class="submenu">
+              <li><a href="#videos">Videos</a></li>
+              <li><a href="#audio-player-content">Audio</a></li>
+              <li><a href="#gallery">Gallery</a></li>
+            </ul>
+          </li>
+          <li><a href="#donate" class="donate-button">Donate</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
@@ -311,11 +406,13 @@
         <ul>
           <li><a href="#about">About</a></li>
           <li><a href="#contributions">Roles</a></li>
-          <li><a href="#videos">Videos</a></li>
-          <li><a href="#gallery">Gallery</a></li>
- <li><a href="#donate" class="donate-button">Donate</a></li>
+          <li><span class="media-label">Media</span></li>
+          <li class="mobile-submenu-item"><a href="#videos">Videos</a></li>
+          <li class="mobile-submenu-item"><a href="#audio-player-content">Audio</a></li>
+          <li class="mobile-submenu-item"><a href="#gallery">Gallery</a></li>
+          <li><a href="#donate" class="donate-button">Donate</a></li>
           <li><a href="#contact">Contact</a></li>
- </ul>
+        </ul>
       </nav>
     </div>
   </header>
@@ -410,7 +507,7 @@
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
       </div>
-      <div class="audio-wrapper">
+      <div class="audio-wrapper" id="audio-player-content">
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
           src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/iskconbangalore/sets/amitasana-dasa"></iframe>
       </div>
