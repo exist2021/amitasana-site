@@ -275,7 +275,7 @@
     }
 
     /* Audio Player */
-    #videos .audio-wrapper {
+    #audio .audio-wrapper { /* Changed from #videos to #audio */
       max-width: 600px;
       margin: 2rem auto; /* For centering the block and vertical margin */
       padding: 1rem;
@@ -284,7 +284,7 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
       box-sizing: border-box; /* Ensures padding is included within the max-width */
     }
-    #videos .audio-wrapper iframe {
+    #audio .audio-wrapper iframe { /* Changed from #videos to #audio */
       width: 100%; /* Takes full width of padded parent */
       height: 166px;
       border: none;
@@ -507,6 +507,14 @@
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
       </div>
+      <!-- audio-wrapper was here, now moved to its own section -->
+    </div>
+  </section>
+
+  <!-- Audio Section -->
+  <section id="audio">
+    <div class="section-content container">
+      <h2>Audio</h2>
       <div class="audio-wrapper" id="audio-player-content">
         <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
           src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/iskconbangalore/sets/amitasana-dasa"></iframe>
